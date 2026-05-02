@@ -1,0 +1,763 @@
+{
+  "summary": {
+    "total_queries": 11,
+    "mean_top_relevance": 0.628,
+    "mean_precision_at_3": 0.697,
+    "mean_precision_at_5": 0.564,
+    "mean_hit_rate": 1.0,
+    "mean_mrr": 0.848,
+    "by_category": {
+      "schema": {
+        "queries": 3,
+        "mean_top_relevance": 0.675,
+        "mean_hit_rate": 1.0
+      },
+      "quality": {
+        "queries": 3,
+        "mean_top_relevance": 0.607,
+        "mean_hit_rate": 1.0
+      },
+      "timeout": {
+        "queries": 3,
+        "mean_top_relevance": 0.634,
+        "mean_hit_rate": 1.0
+      },
+      "schema_lookup": {
+        "queries": 2,
+        "mean_top_relevance": 0.577,
+        "mean_hit_rate": 1.0
+      }
+    },
+    "pass_rate": 0.545
+  },
+  "results": [
+    {
+      "query_id": "schema_01",
+      "description": "Direct column-not-found error",
+      "query": "column geo_region does not exist in raw_orders UndefinedColumn",
+      "expected_sources": [
+        "schema_mismatch.md"
+      ],
+      "top_relevance": 0.715,
+      "mean_relevance": 0.3710714285714286,
+      "precision_at_3": 1.0,
+      "precision_at_5": 0.8,
+      "hit_rate_at_5": 1.0,
+      "mrr": 1.0,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.715,
+          "is_correct": true,
+          "preview": "## Fix ```sql SELECT geo_region AS region FROM raw_orders ```"
+        },
+        {
+          "rank": 2,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.576,
+          "is_correct": true,
+          "preview": "## Symptoms psycopg2.errors.UndefinedColumn: column \"geo_region\" does not exist ValueError: SCHEMA MISMATCH: Expected co"
+        },
+        {
+          "rank": 3,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.573,
+          "is_correct": true,
+          "preview": "## Known incidents - 2024-03-15: Platform team renamed region to geo_region temporarily. Failed for 2 hours. Fixed by re"
+        },
+        {
+          "rank": 4,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.54,
+          "is_correct": false,
+          "preview": "## Fix ```sql CREATE INDEX CONCURRENTLY idx_raw_orders_region ON raw_orders(region); ANALYZE raw_orders; ```"
+        },
+        {
+          "rank": 5,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.466,
+          "is_correct": true,
+          "preview": "## Diagnosis steps 1. Identify the missing column from the error message 2. Check actual table schema: ```sql SELECT col"
+        }
+      ]
+    },
+    {
+      "query_id": "schema_02",
+      "description": "How to fix schema mismatch",
+      "query": "how to fix column not found rename upstream schema mismatch pipeline",
+      "expected_sources": [
+        "schema_mismatch.md"
+      ],
+      "top_relevance": 0.75,
+      "mean_relevance": 0.3704285714285714,
+      "precision_at_3": 1.0,
+      "precision_at_5": 0.8,
+      "hit_rate_at_5": 1.0,
+      "mrr": 1.0,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.75,
+          "is_correct": true,
+          "preview": "## What is a schema mismatch? A schema mismatch occurs when our pipeline expects a column that no longer exists in the s"
+        },
+        {
+          "rank": 2,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.485,
+          "is_correct": true,
+          "preview": "## Diagnosis steps 1. Identify the missing column from the error message 2. Check actual table schema: ```sql SELECT col"
+        },
+        {
+          "rank": 3,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.434,
+          "is_correct": true,
+          "preview": "# Runbook: Schema Mismatch Errors **Error type:** `schema_mismatch` **Severity:** High"
+        },
+        {
+          "rank": 4,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.383,
+          "is_correct": true,
+          "preview": "## Known incidents - 2024-03-15: Platform team renamed region to geo_region temporarily. Failed for 2 hours. Fixed by re"
+        },
+        {
+          "rank": 5,
+          "source_file": "dag_02_schema_mismatch__validate_schema_exists__manual__2026-05-02T01-57-41.41360300-00.json",
+          "source_type": "incident",
+          "relevance": 0.377,
+          "is_correct": false,
+          "preview": "INCIDENT REPORT =============== DAG: dag_02_schema_mismatch Task: validate_schema_exists Error type: unknown Date: 2026-"
+        }
+      ]
+    },
+    {
+      "query_id": "schema_03",
+      "description": "Schema validation failure",
+      "query": "SCHEMA MISMATCH expected columns not found actual columns raw_orders",
+      "expected_sources": [
+        "schema_mismatch.md"
+      ],
+      "top_relevance": 0.561,
+      "mean_relevance": 0.41521428571428576,
+      "precision_at_3": 1.0,
+      "precision_at_5": 0.6,
+      "hit_rate_at_5": 1.0,
+      "mrr": 1.0,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.561,
+          "is_correct": true,
+          "preview": "## Diagnosis steps 1. Identify the missing column from the error message 2. Check actual table schema: ```sql SELECT col"
+        },
+        {
+          "rank": 2,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.557,
+          "is_correct": true,
+          "preview": "## What is a schema mismatch? A schema mismatch occurs when our pipeline expects a column that no longer exists in the s"
+        },
+        {
+          "rank": 3,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.514,
+          "is_correct": true,
+          "preview": "## Fix ```sql SELECT geo_region AS region FROM raw_orders ```"
+        },
+        {
+          "rank": 4,
+          "source_file": "schema.yml",
+          "source_type": "schema_doc",
+          "relevance": 0.488,
+          "is_correct": false,
+          "preview": "DBT SOURCE TABLE: pipeline_db.raw_orders Description: Every order placed through the platform. One row per order. Loaded"
+        },
+        {
+          "rank": 5,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.479,
+          "is_correct": false,
+          "preview": "## Past incidents - 2024-02-14: raw_orders.region index dropped during migration. Fixed in 45 min. - 2024-01-30: Runaway"
+        }
+      ]
+    },
+    {
+      "query_id": "quality_01",
+      "description": "NULL primary key error",
+      "query": "null order_id primary key violation data quality gate failed",
+      "expected_sources": [
+        "data_quality.md"
+      ],
+      "top_relevance": 0.687,
+      "mean_relevance": 0.4140714285714285,
+      "precision_at_3": 0.6666666666666666,
+      "precision_at_5": 0.4,
+      "hit_rate_at_5": 1.0,
+      "mrr": 1.0,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "data_quality.md",
+          "source_type": "runbook",
+          "relevance": 0.687,
+          "is_correct": true,
+          "preview": "## Symptoms AssertionError: DATA QUALITY GATE FAILED NOT NULL CHECK FAILED: 2 rows have NULL order_id POSITIVE VALUE CHE"
+        },
+        {
+          "rank": 2,
+          "source_file": "data_quality.md",
+          "source_type": "runbook",
+          "relevance": 0.639,
+          "is_correct": true,
+          "preview": "## What is a data quality failure? Data arrived with invalid values violating our contracts. Common causes: 1. NULL prim"
+        },
+        {
+          "rank": 3,
+          "source_file": "schema.yml",
+          "source_type": "schema_doc",
+          "relevance": 0.541,
+          "is_correct": false,
+          "preview": "DBT SOURCE TABLE: pipeline_db.raw_orders Description: Every order placed through the platform. One row per order. Loaded"
+        },
+        {
+          "rank": 4,
+          "source_file": "dag_03_data_quality_failure__run_quality_checks__manual__2026-05-02T01-57-52.14793600-00.json",
+          "source_type": "incident",
+          "relevance": 0.519,
+          "is_correct": false,
+          "preview": "INCIDENT REPORT =============== DAG: dag_03_data_quality_failure Task: run_quality_checks Error type: data_quality_failu"
+        },
+        {
+          "rank": 5,
+          "source_file": "schema.yml",
+          "source_type": "schema_doc",
+          "relevance": 0.492,
+          "is_correct": false,
+          "preview": "DBT MODEL: stg_orders Description: Cleaned and standardized orders. Built from raw_orders. All columns are cast to corre"
+        }
+      ]
+    },
+    {
+      "query_id": "quality_02",
+      "description": "Negative amount check",
+      "query": "negative amount positive value check failed raw_orders",
+      "expected_sources": [
+        "data_quality.md"
+      ],
+      "top_relevance": 0.573,
+      "mean_relevance": 0.42649999999999993,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_5": 1.0,
+      "mrr": 0.3333333333333333,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "dag_03_data_quality_failure__run_quality_checks__manual__2026-05-02T01-57-52.14793600-00.json",
+          "source_type": "incident",
+          "relevance": 0.573,
+          "is_correct": false,
+          "preview": "INCIDENT REPORT =============== DAG: dag_03_data_quality_failure Task: run_quality_checks Error type: data_quality_failu"
+        },
+        {
+          "rank": 2,
+          "source_file": "schema.yml",
+          "source_type": "schema_doc",
+          "relevance": 0.558,
+          "is_correct": false,
+          "preview": "DBT MODEL: stg_orders Description: Cleaned and standardized orders. Built from raw_orders. All columns are cast to corre"
+        },
+        {
+          "rank": 3,
+          "source_file": "data_quality.md",
+          "source_type": "runbook",
+          "relevance": 0.511,
+          "is_correct": true,
+          "preview": "## Symptoms AssertionError: DATA QUALITY GATE FAILED NOT NULL CHECK FAILED: 2 rows have NULL order_id POSITIVE VALUE CHE"
+        },
+        {
+          "rank": 4,
+          "source_file": "schema.yml",
+          "source_type": "schema_doc",
+          "relevance": 0.504,
+          "is_correct": false,
+          "preview": "DBT SOURCE TABLE: pipeline_db.raw_orders Description: Every order placed through the platform. One row per order. Loaded"
+        },
+        {
+          "rank": 5,
+          "source_file": "stg_orders.sql",
+          "source_type": "sql_model",
+          "relevance": 0.483,
+          "is_correct": false,
+          "preview": "SQL MODEL: stg_orders File: phase3\\dbt_project\\models\\staging\\stg_orders.sql WITH source AS ( SELECT * FROM {{ source('p"
+        }
+      ]
+    },
+    {
+      "query_id": "quality_03",
+      "description": "Referential integrity failure",
+      "query": "referential integrity foreign key customer_id does not exist orphaned records",
+      "expected_sources": [
+        "data_quality.md"
+      ],
+      "top_relevance": 0.561,
+      "mean_relevance": 0.33542857142857146,
+      "precision_at_3": 0.6666666666666666,
+      "precision_at_5": 0.6,
+      "hit_rate_at_5": 1.0,
+      "mrr": 1.0,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "data_quality.md",
+          "source_type": "runbook",
+          "relevance": 0.561,
+          "is_correct": true,
+          "preview": "## Symptoms AssertionError: DATA QUALITY GATE FAILED NOT NULL CHECK FAILED: 2 rows have NULL order_id POSITIVE VALUE CHE"
+        },
+        {
+          "rank": 2,
+          "source_file": "data_quality.md",
+          "source_type": "runbook",
+          "relevance": 0.493,
+          "is_correct": true,
+          "preview": "## What is a data quality failure? Data arrived with invalid values violating our contracts. Common causes: 1. NULL prim"
+        },
+        {
+          "rank": 3,
+          "source_file": "schema.yml",
+          "source_type": "schema_doc",
+          "relevance": 0.456,
+          "is_correct": false,
+          "preview": "DBT SOURCE TABLE: pipeline_db.raw_orders Description: Every order placed through the platform. One row per order. Loaded"
+        },
+        {
+          "rank": 4,
+          "source_file": "schema_mismatch.md",
+          "source_type": "runbook",
+          "relevance": 0.433,
+          "is_correct": false,
+          "preview": "## Known incidents - 2024-03-15: Platform team renamed region to geo_region temporarily. Failed for 2 hours. Fixed by re"
+        },
+        {
+          "rank": 5,
+          "source_file": "data_quality.md",
+          "source_type": "runbook",
+          "relevance": 0.357,
+          "is_correct": true,
+          "preview": "## Fix ```sql CREATE TABLE IF NOT EXISTS quarantine_orders AS SELECT * FROM raw_orders WHERE 1=0; INSERT INTO quarantine"
+        }
+      ]
+    },
+    {
+      "query_id": "timeout_01",
+      "description": "Airflow task timeout",
+      "query": "AirflowTaskTimeout task killed execution timeout exceeded slow query",
+      "expected_sources": [
+        "timeout.md"
+      ],
+      "top_relevance": 0.732,
+      "mean_relevance": 0.3923571428571429,
+      "precision_at_3": 0.6666666666666666,
+      "precision_at_5": 0.4,
+      "hit_rate_at_5": 1.0,
+      "mrr": 1.0,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.732,
+          "is_correct": true,
+          "preview": "## What is a task timeout? Task ran longer than execution_timeout and Airflow killed it. Causes: 1. Missing database ind"
+        },
+        {
+          "rank": 2,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.59,
+          "is_correct": true,
+          "preview": "## Symptoms airflow.exceptions.AirflowTaskTimeout: Timeout, PID: 12345"
+        },
+        {
+          "rank": 3,
+          "source_file": "dag_04_timeout_failure__slow_aggregation_query__manual__2026-05-02T01-58-02.22385900-00.json",
+          "source_type": "incident",
+          "relevance": 0.566,
+          "is_correct": false,
+          "preview": "INCIDENT REPORT =============== DAG: dag_04_timeout_failure Task: slow_aggregation_query Error type: task_timeout Date: "
+        },
+        {
+          "rank": 4,
+          "source_file": "dag_01_healthy_pipeline__calculate_daily_revenue__manual__2026-05-01T23-39-03.12533700-00.json",
+          "source_type": "incident",
+          "relevance": 0.5,
+          "is_correct": false,
+          "preview": "INCIDENT REPORT =============== DAG: dag_01_healthy_pipeline Task: calculate_daily_revenue Error type: unknown Date: 202"
+        },
+        {
+          "rank": 5,
+          "source_file": "dag_03_data_quality_failure__run_quality_checks__manual__2026-05-02T01-57-52.14793600-00.json",
+          "source_type": "incident",
+          "relevance": 0.492,
+          "is_correct": false,
+          "preview": "INCIDENT REPORT =============== DAG: dag_03_data_quality_failure Task: run_quality_checks Error type: data_quality_failu"
+        }
+      ]
+    },
+    {
+      "query_id": "timeout_02",
+      "description": "Missing index causing slow query",
+      "query": "missing index sequential scan large table GROUP BY slow aggregation",
+      "expected_sources": [
+        "timeout.md"
+      ],
+      "top_relevance": 0.63,
+      "mean_relevance": 0.329,
+      "precision_at_3": 0.6666666666666666,
+      "precision_at_5": 0.8,
+      "hit_rate_at_5": 1.0,
+      "mrr": 1.0,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.63,
+          "is_correct": true,
+          "preview": "## Prevention - Every GROUP BY column on tables over 100k rows needs an index - Review EXPLAIN ANALYZE before merging an"
+        },
+        {
+          "rank": 2,
+          "source_file": "dag_04_timeout_failure__slow_aggregation_query__manual__2026-05-02T01-58-02.22385900-00.json",
+          "source_type": "incident",
+          "relevance": 0.501,
+          "is_correct": false,
+          "preview": "INCIDENT REPORT =============== DAG: dag_04_timeout_failure Task: slow_aggregation_query Error type: task_timeout Date: "
+        },
+        {
+          "rank": 3,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.476,
+          "is_correct": true,
+          "preview": "## Past incidents - 2024-02-14: raw_orders.region index dropped during migration. Fixed in 45 min. - 2024-01-30: Runaway"
+        },
+        {
+          "rank": 4,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.458,
+          "is_correct": true,
+          "preview": "## Fix ```sql CREATE INDEX CONCURRENTLY idx_raw_orders_region ON raw_orders(region); ANALYZE raw_orders; ```"
+        },
+        {
+          "rank": 5,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.392,
+          "is_correct": true,
+          "preview": "## Diagnosis ```sql SELECT pid, now() - query_start AS duration, query FROM pg_stat_activity WHERE (now() - query_start)"
+        }
+      ]
+    },
+    {
+      "query_id": "timeout_03",
+      "description": "How to fix timeout",
+      "query": "CREATE INDEX CONCURRENTLY fix timeout query optimization postgres",
+      "expected_sources": [
+        "timeout.md"
+      ],
+      "top_relevance": 0.54,
+      "mean_relevance": 0.2782142857142857,
+      "precision_at_3": 0.6666666666666666,
+      "precision_at_5": 0.8,
+      "hit_rate_at_5": 1.0,
+      "mrr": 0.5,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "dag_04_timeout_failure__slow_aggregation_query__manual__2026-05-02T01-58-02.22385900-00.json",
+          "source_type": "incident",
+          "relevance": 0.54,
+          "is_correct": false,
+          "preview": "INCIDENT REPORT =============== DAG: dag_04_timeout_failure Task: slow_aggregation_query Error type: task_timeout Date: "
+        },
+        {
+          "rank": 2,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.513,
+          "is_correct": true,
+          "preview": "## Fix ```sql CREATE INDEX CONCURRENTLY idx_raw_orders_region ON raw_orders(region); ANALYZE raw_orders; ```"
+        },
+        {
+          "rank": 3,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.396,
+          "is_correct": true,
+          "preview": "## Prevention - Every GROUP BY column on tables over 100k rows needs an index - Review EXPLAIN ANALYZE before merging an"
+        },
+        {
+          "rank": 4,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.378,
+          "is_correct": true,
+          "preview": "## What is a task timeout? Task ran longer than execution_timeout and Airflow killed it. Causes: 1. Missing database ind"
+        },
+        {
+          "rank": 5,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.352,
+          "is_correct": true,
+          "preview": "## Past incidents - 2024-02-14: raw_orders.region index dropped during migration. Fixed in 45 min. - 2024-01-30: Runaway"
+        }
+      ]
+    },
+    {
+      "query_id": "schema_lookup_01",
+      "description": "What columns does raw_orders have",
+      "query": "raw_orders table columns schema definition order_id customer_id",
+      "expected_sources": [
+        "schema.yml"
+      ],
+      "top_relevance": 0.526,
+      "mean_relevance": 0.3774285714285714,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.4,
+      "hit_rate_at_5": 1.0,
+      "mrr": 0.5,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "data_quality.md",
+          "source_type": "runbook",
+          "relevance": 0.526,
+          "is_correct": false,
+          "preview": "## Diagnosis ```sql SELECT * FROM raw_orders WHERE order_id IS NULL LIMIT 10; SELECT * FROM raw_orders WHERE amount < 0 "
+        },
+        {
+          "rank": 2,
+          "source_file": "schema.yml",
+          "source_type": "schema_doc",
+          "relevance": 0.518,
+          "is_correct": true,
+          "preview": "DBT SOURCE TABLE: pipeline_db.raw_orders Description: Every order placed through the platform. One row per order. Loaded"
+        },
+        {
+          "rank": 3,
+          "source_file": "data_quality.md",
+          "source_type": "runbook",
+          "relevance": 0.482,
+          "is_correct": false,
+          "preview": "## Symptoms AssertionError: DATA QUALITY GATE FAILED NOT NULL CHECK FAILED: 2 rows have NULL order_id POSITIVE VALUE CHE"
+        },
+        {
+          "rank": 4,
+          "source_file": "schema.yml",
+          "source_type": "schema_doc",
+          "relevance": 0.434,
+          "is_correct": true,
+          "preview": "DBT SOURCE TABLE: pipeline_db.raw_customers Description: Customer master data. One row per customer. Loaded from the CRM"
+        },
+        {
+          "rank": 5,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.428,
+          "is_correct": false,
+          "preview": "## Fix ```sql CREATE INDEX CONCURRENTLY idx_raw_orders_region ON raw_orders(region); ANALYZE raw_orders; ```"
+        }
+      ]
+    },
+    {
+      "query_id": "schema_lookup_02",
+      "description": "stg_orders model definition",
+      "query": "stg_orders dbt model staging cleaned standardized orders",
+      "expected_sources": [
+        "schema.yml"
+      ],
+      "top_relevance": 0.628,
+      "mean_relevance": 0.3619285714285714,
+      "precision_at_3": 0.6666666666666666,
+      "precision_at_5": 0.4,
+      "hit_rate_at_5": 1.0,
+      "mrr": 1.0,
+      "retrieved": [
+        {
+          "rank": 1,
+          "source_file": "schema.yml",
+          "source_type": "schema_doc",
+          "relevance": 0.628,
+          "is_correct": true,
+          "preview": "DBT MODEL: stg_orders Description: Cleaned and standardized orders. Built from raw_orders. All columns are cast to corre"
+        },
+        {
+          "rank": 2,
+          "source_file": "stg_orders.sql",
+          "source_type": "sql_model",
+          "relevance": 0.497,
+          "is_correct": false,
+          "preview": "SQL MODEL: stg_orders File: phase3\\dbt_project\\models\\staging\\stg_orders.sql WITH source AS ( SELECT * FROM {{ source('p"
+        },
+        {
+          "rank": 3,
+          "source_file": "schema.yml",
+          "source_type": "schema_doc",
+          "relevance": 0.484,
+          "is_correct": true,
+          "preview": "DBT SOURCE TABLE: pipeline_db.raw_orders Description: Every order placed through the platform. One row per order. Loaded"
+        },
+        {
+          "rank": 4,
+          "source_file": "data_quality.md",
+          "source_type": "runbook",
+          "relevance": 0.463,
+          "is_correct": false,
+          "preview": "## Prevention - Run dbt not_null and relationships tests before mart models - Route bad records to quarantine instead of"
+        },
+        {
+          "rank": 5,
+          "source_file": "timeout.md",
+          "source_type": "runbook",
+          "relevance": 0.412,
+          "is_correct": false,
+          "preview": "## Past incidents - 2024-02-14: raw_orders.region index dropped during migration. Fixed in 45 min. - 2024-01-30: Runaway"
+        }
+      ]
+    }
+  ],
+  "dataset": [
+    {
+      "id": "schema_01",
+      "description": "Direct column-not-found error",
+      "query": "column geo_region does not exist in raw_orders UndefinedColumn",
+      "expected_sources": [
+        "schema_mismatch.md"
+      ],
+      "error_type": "schema_mismatch",
+      "category": "schema"
+    },
+    {
+      "id": "schema_02",
+      "description": "How to fix schema mismatch",
+      "query": "how to fix column not found rename upstream schema mismatch pipeline",
+      "expected_sources": [
+        "schema_mismatch.md"
+      ],
+      "error_type": "schema_mismatch",
+      "category": "schema"
+    },
+    {
+      "id": "schema_03",
+      "description": "Schema validation failure",
+      "query": "SCHEMA MISMATCH expected columns not found actual columns raw_orders",
+      "expected_sources": [
+        "schema_mismatch.md"
+      ],
+      "error_type": "schema_mismatch",
+      "category": "schema"
+    },
+    {
+      "id": "quality_01",
+      "description": "NULL primary key error",
+      "query": "null order_id primary key violation data quality gate failed",
+      "expected_sources": [
+        "data_quality.md"
+      ],
+      "error_type": "data_quality_failure",
+      "category": "quality"
+    },
+    {
+      "id": "quality_02",
+      "description": "Negative amount check",
+      "query": "negative amount positive value check failed raw_orders",
+      "expected_sources": [
+        "data_quality.md"
+      ],
+      "error_type": "data_quality_failure",
+      "category": "quality"
+    },
+    {
+      "id": "quality_03",
+      "description": "Referential integrity failure",
+      "query": "referential integrity foreign key customer_id does not exist orphaned records",
+      "expected_sources": [
+        "data_quality.md"
+      ],
+      "error_type": "data_quality_failure",
+      "category": "quality"
+    },
+    {
+      "id": "timeout_01",
+      "description": "Airflow task timeout",
+      "query": "AirflowTaskTimeout task killed execution timeout exceeded slow query",
+      "expected_sources": [
+        "timeout.md"
+      ],
+      "error_type": "task_timeout",
+      "category": "timeout"
+    },
+    {
+      "id": "timeout_02",
+      "description": "Missing index causing slow query",
+      "query": "missing index sequential scan large table GROUP BY slow aggregation",
+      "expected_sources": [
+        "timeout.md"
+      ],
+      "error_type": "task_timeout",
+      "category": "timeout"
+    },
+    {
+      "id": "timeout_03",
+      "description": "How to fix timeout",
+      "query": "CREATE INDEX CONCURRENTLY fix timeout query optimization postgres",
+      "expected_sources": [
+        "timeout.md"
+      ],
+      "error_type": "task_timeout",
+      "category": "timeout"
+    },
+    {
+      "id": "schema_lookup_01",
+      "description": "What columns does raw_orders have",
+      "query": "raw_orders table columns schema definition order_id customer_id",
+      "expected_sources": [
+        "schema.yml"
+      ],
+      "error_type": null,
+      "category": "schema_lookup"
+    },
+    {
+      "id": "schema_lookup_02",
+      "description": "stg_orders model definition",
+      "query": "stg_orders dbt model staging cleaned standardized orders",
+      "expected_sources": [
+        "schema.yml"
+      ],
+      "error_type": null,
+      "category": "schema_lookup"
+    }
+  ]
+}

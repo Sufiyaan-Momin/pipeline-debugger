@@ -1,0 +1,117 @@
+# models/staging/schema.yml
+# ─────────────────────────────────────────────────
+# This file is CRITICAL for your RAG agent.
+# It defines:
+#   - Sources (raw tables) with column descriptions
+#   - Models (transformed tables) with tests
+#   - Data quality tests dbt runs automatically
+#
+# Your RAG agent will ingest this file to understand:
+#   "What columns exist?", "What are they supposed to contain?"
+#   "What tests were run?", "What counts as valid data?"
+#
+# LEARNING: This is called a "data contract" — it's the agreement
+# between the team that produces data and the team that consumes it.
+# When the contract breaks → pipeline fails → your agent diagnoses why.
+# ─────────────────────────────────────────────────
+
+version: 2
+
+# ── Source definitions (raw tables we DON'T own) ──────────────────
+sources:
+  - name: pipeline_db
+    description: >
+      Raw operational data loaded from our transactional database.
+      Data is loaded nightly by the ingestion team.
+      Contact: data-eng@company.com | Slack: #data-pipeline
+
+    tables:
+      - name: raw_orders
+        description: >
+          Every order placed through the platform. One row per order.
+          Loaded from the orders service via CDC (Change Data Capture).
+          Known issues: occasionally contains NULL order_ids when the
+          upstream order service restarts — this is a known bug (JIRA: DE-1234).
+        columns:
+          - name: order_id
+            description: Unique identifier for each order. VARCHAR(50). Should never be NULL.
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: FK to raw_customers.customer_id. Should always reference a valid customer.
+            tests:
+              - not_null
+              - relationships:
+                  to: source('pipeline_db', 'raw_customers')
+                  field: customer_id
+          - name: amount
+            description: >
+              Order total in USD. NUMERIC(10,2).
+              Must be >= 0. Refunds are tracked separately in raw_refunds (not negative orders).
+            tests:
+              - not_null
+          - name: status
+            description: "Order lifecycle status. One of: completed, pending, failed, cancelled."
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['completed', 'pending', 'failed', 'cancelled']
+          - name: created_at
+            description: UTC timestamp when order was created. Never NULL.
+            tests:
+              - not_null
+          - name: region
+            description: >
+              Geographic region code. One of: US, EU, APAC, LATAM.
+              NOTE: As of 2024-03-15 this column was briefly renamed to 'geo_region'
+              by the platform team before being reverted. If you see a column-not-found
+              error on this column, check with #platform-eng on Slack.
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['US', 'EU', 'APAC', 'LATAM']
+
+      - name: raw_customers
+        description: Customer master data. One row per customer. Loaded from the CRM daily.
+        columns:
+          - name: customer_id
+            description: Primary key. Auto-incremented integer from the CRM.
+            tests:
+              - unique
+              - not_null
+          - name: tier
+            description: Subscription tier. Determines feature access and pricing.
+            tests:
+              - accepted_values:
+                  values: ['free', 'pro', 'enterprise']
+
+# ── Model definitions (tables WE own and transform) ───────────────
+models:
+  - name: stg_orders
+    description: >
+      Cleaned and standardized orders. Built from raw_orders.
+      All columns are cast to correct types, status is uppercased,
+      and records with NULL order_ids are filtered out.
+      Includes _data_quality_flag for records with anomalies that
+      should be investigated but not dropped.
+    columns:
+      - name: order_id
+        description: Cleaned order identifier. NULL records excluded upstream.
+        tests:
+          - unique
+          - not_null
+      - name: amount
+        description: Order total. NULLs coalesced to 0.00.
+        tests:
+          - not_null
+      - name: status
+        description: Uppercased status. One of COMPLETED, PENDING, FAILED, CANCELLED.
+        tests:
+          - accepted_values:
+              values: ['COMPLETED', 'PENDING', 'FAILED', 'CANCELLED']
+      - name: _data_quality_flag
+        description: >
+          NULL for clean records. Set to 'negative_amount', 'zero_amount',
+          or 'unknown_status' for records needing review.
+          These are kept (not dropped) so they can be investigated.
